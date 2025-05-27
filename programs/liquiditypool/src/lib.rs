@@ -1,3 +1,4 @@
+#![allow(unexpected_cfgs)]
 use anchor_lang::prelude::*;
 
 declare_id!("D84sXEooUu4FJ2EqdULee5HoELxb6Nfs1hiiLS6N73yp");
@@ -6,8 +7,8 @@ declare_id!("D84sXEooUu4FJ2EqdULee5HoELxb6Nfs1hiiLS6N73yp");
 pub mod liquiditypool {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        msg!("Greetings from: {:?}", ctx.program_id);
+    pub fn initialize(ctx: Context<InitializeLiquidityPool>,fees: u8) -> Result<()> {
+        ctx.accounts.init_liquidit_pool(&ctx.bumps,fees)?;
         Ok(())
     }
 }
