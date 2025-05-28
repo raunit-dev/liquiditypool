@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[account]
+#[derive(InitSpace, Debug)]
 pub struct LiquidityPoolConfig {
     pub creator: Pubkey,
     pub authority: Pubkey,
@@ -9,8 +10,6 @@ pub struct LiquidityPoolConfig {
     pub lp_mint: Pubkey,
     pub vault_token_a: Pubkey,
     pub vault_token_b: Pubkey,
-    pub vault_a_bump: Pubkey,
-    pub vault_b_bump: Pubkey,
     pub lp_mint_auth: Pubkey,
     pub token_a_deposits: u64,
     pub token_b_deposits: u64,
@@ -19,8 +18,4 @@ pub struct LiquidityPoolConfig {
     pub pool_config_bump: u8,
     pub created_at: i64,
     pub is_active: bool,
-}
-
-impl Space for LiquidityPoolConfig {
-    const INIT_SPACE: usize = 32 * 10 + 8 * 3 + 1 * 2 + 8 + 2;
 }
