@@ -23,7 +23,8 @@ pub struct InitializeLiquidityPool<'info> {
     pub mint_b: InterfaceAccount<'info, Mint>,
 
     #[account(
-        mint::token_program = token_program
+        mint::token_program = token_program,
+        mint::authority = lp_mint_auth,
     )]
     pub lp_mint: InterfaceAccount<'info, Mint>,
 
@@ -37,7 +38,8 @@ pub struct InitializeLiquidityPool<'info> {
     pub pool_config_account: Account<'info, LiquidityPoolConfig>,
 
     #[account(
-        mut,
+        init_if_needed,
+        payer = creator,
         associated_token::mint = mint_a,
         associated_token::authority = pool_config_account,
         associated_token::token_program = token_program,
@@ -45,7 +47,8 @@ pub struct InitializeLiquidityPool<'info> {
     pub vault_token_a: InterfaceAccount<'info, TokenAccount>,
 
     #[account(
-        mut,
+        init_if_needed,
+        payer = creator,
         associated_token::mint = mint_b,
         associated_token::authority = pool_config_account,
         associated_token::token_program = token_program,
@@ -53,7 +56,8 @@ pub struct InitializeLiquidityPool<'info> {
     pub vault_token_b: InterfaceAccount<'info, TokenAccount>,
 
     #[account(
-        mut,
+        init_if_needed,
+        payer = creator,
         associated_token::mint = lp_mint,
         associated_token::authority = creator,
         associated_token::token_program = token_program,
@@ -93,6 +97,7 @@ impl <'info> InitializeLiquidityPool <'info> {
             vault_token_a: self.vault_token_a.key(),
             vault_token_b: self.vault_token_b.key(),
             pool_config_bump: bumps.pool_config_account,
+            lp_mint_auth_bump: bumps.lp_mint_auth,
             token_a_deposits: 0,
             token_b_deposits: 0,
             total_pool_value: 0,

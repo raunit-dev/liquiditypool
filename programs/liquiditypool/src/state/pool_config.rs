@@ -16,6 +16,7 @@ pub struct LiquidityPoolConfig {
     pub total_pool_value: u64,
     pub fees: u8,
     pub pool_config_bump: u8,
+    pub lp_mint_auth_bump: u8,
     pub created_at: i64,
     pub is_active: bool,
 }
